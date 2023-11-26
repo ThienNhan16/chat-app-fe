@@ -169,7 +169,7 @@ const CallDialog = ({ open, handleClose }) => {
 
         const { webRTC, microphone } = result;
 
-        if (webRTC && microphone) {
+        if (webRTC || microphone) {
           zg.loginRoom(
             roomID,
             this_token,
@@ -205,6 +205,10 @@ const CallDialog = ({ open, handleClose }) => {
                 // Callback for reporting stream publishing quality.
                 // ...
                 // console.log(streamID, stats);
+                stats.audio.autoplay = true;
+                stats.audio.paused = false;
+                stats.paused = false;
+                console.log("streamID, stats", streamID, stats);
                 // * we can use this info to show local audio stream quality
               });
             })
@@ -268,6 +272,13 @@ const CallDialog = ({ open, handleClose }) => {
                   streamList,
                   extendedData
                 );
+                const remoteStream = await zg.startPlayingStream(userID);
+  
+                // Get the audio tag.
+                const remoteAudio = document.getElementById("remote-audio");
+                // The local stream is a MediaStream object. You can render audio by assigning the local stream to the srcObject property of video or audio.
+                remoteAudio.srcObject = remoteStream;
+                remoteAudio.play();
 
                 // * It would be quite useful to create and play multiple audio streams in a group call
               } else if (updateType === "DELETE") {
