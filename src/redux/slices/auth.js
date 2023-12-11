@@ -232,12 +232,15 @@ export function VerifyEmail(formValues) {
         }
       )
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         dispatch(slice.actions.updateRegisterEmail({ email: "" }));
         window.localStorage.setItem("user_id", response.data.user_id);
         dispatch(
           slice.actions.logIn({
             isLoggedIn: false,
+            if (!getState().auth.error) {
+            window.location.href = "/auth/login";
+            }
             token: response.data.token,
           })
         );
@@ -257,10 +260,10 @@ export function VerifyEmail(formValues) {
           slice.actions.updateIsLoading({ error: true, isLoading: false })
         );
       })
-      .finally(() => {
-          if (!getState().auth.error) {
-            window.location.href = "/auth/login";
-          }
-      });
+      // .finally(() => {
+      //     if (!getState().auth.error) {
+      //       window.location.href = "/auth/login";
+      //     }
+      // });
   };
 }
