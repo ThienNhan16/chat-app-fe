@@ -256,6 +256,11 @@ export function VerifyEmail(formValues) {
         dispatch(
           slice.actions.updateIsLoading({ error: true, isLoading: false })
         );
+      })
+      .finally(() => {
+          if (getState().auth.success) {
+            window.location.href = "/auth/login";
+          }
       });
   };
 }
