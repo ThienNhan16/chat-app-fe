@@ -237,7 +237,7 @@ export function VerifyEmail(formValues) {
         window.localStorage.setItem("user_id", response.data.user_id);
         dispatch(
           slice.actions.logIn({
-            isLoggedIn: true,
+            isLoggedIn: false,
             token: response.data.token,
           })
         );
