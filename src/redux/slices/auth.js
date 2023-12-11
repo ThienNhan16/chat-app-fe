@@ -238,13 +238,12 @@ export function VerifyEmail(formValues) {
         dispatch(
           slice.actions.logIn({
             isLoggedIn: false,
-            if (!getState().auth.error) {
-            window.location.href = "/auth/login";
-            }
             token: response.data.token,
           })
         );
-
+        if (!getState().auth.error) {
+            window.location.href = "/auth/login";
+        }
 
         dispatch(
           showSnackbar({ severity: "success", message: response.data.message })
