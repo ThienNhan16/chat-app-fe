@@ -258,7 +258,7 @@ export function VerifyEmail(formValues) {
         );
       })
       .finally(() => {
-          if (getState().auth.success) {
+          if (!getState().auth.error) {
             window.location.href = "/auth/login";
           }
       });
